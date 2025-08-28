@@ -53,9 +53,11 @@ const WheelSlider: React.FC<WheelSliderProps> = ({
     customAmounts ||
     Array.from({ length: 25 }, (_, index) => {
       const value = (index + 1) * 20;
-      // Show SOL amounts when currency is SOL, otherwise show USD
+      // Show SOL amounts when currency is SOL, otherwise show USDC
       const isSOL = currencyPair?.quote?.symbol === "SOL";
-      const label = isSOL ? `${(value / 200).toFixed(2)}\nSOL` : `$${value}`;
+      const label = isSOL
+        ? `${(value / 200).toFixed(2)}\nSOL`
+        : `${value}\nUSDC`;
 
       return {
         value,
@@ -219,16 +221,17 @@ const WheelSlider: React.FC<WheelSliderProps> = ({
         }}
       >
         <View
-          className={`rounded-xl p-4 border ${
+          className={`rounded-xl p-4 border backdrop-blur-sm ${
             item.value === selectedAmount
               ? currencyPair?.quote?.symbol === "USDC"
-                ? "bg-blue-500/80 border-blue-400"
-                : "bg-purple-500/80 border-purple-400"
+                ? "bg-blue-500/20 border-blue-400/60"
+                : "bg-purple-500/20 border-purple-400/60"
               : currencyPair?.quote?.symbol === "USDC"
-              ? "bg-blue-500/15 border-blue-400/40"
-              : "bg-purple-500/15 border-purple-400/40"
+              ? "bg-blue-500/10 border-blue-400/30"
+              : "bg-purple-500/10 border-purple-400/30"
           }`}
           style={{
+            width: ITEM_WIDTH - 20, // Same width for both currencies
             shadowColor:
               item.value === selectedAmount
                 ? currencyPair?.quote?.symbol === "USDC"
@@ -244,9 +247,11 @@ const WheelSlider: React.FC<WheelSliderProps> = ({
           <Text
             className={`text-center font-semibold ${
               item.value === selectedAmount
-                ? "text-2xl text-white"
+                ? "text-lg text-white"
                 : "text-lg text-gray-300"
             }`}
+            numberOfLines={2}
+            adjustsFontSizeToFit={true}
           >
             {item.label}
           </Text>

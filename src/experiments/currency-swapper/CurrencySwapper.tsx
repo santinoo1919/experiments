@@ -40,7 +40,7 @@ export const CurrencySwapper = () => {
 
   // Get currency symbol for display
   const getCurrencySymbol = () => {
-    return currentPair.quote.symbol === "SOL" ? "SOL" : "$";
+    return currentPair.quote.symbol === "SOL" ? "SOL" : "USDC";
   };
 
   return (
@@ -90,11 +90,13 @@ export const CurrencySwapper = () => {
       {/* Main amount display - shows quote currency amount and JUP received */}
       <View className="mb-8 items-center">
         <Text className="text-5xl font-bold text-white">
-          {getCurrencySymbol()}
-          {currentSwap.quoteAmount.toFixed(2)}
+          {getCurrencySymbol()}{" "}
+          {currentPair.quote.symbol === "SOL"
+            ? currentSwap.quoteAmount.toFixed(2)
+            : Math.round(currentSwap.quoteAmount)}
         </Text>
         <Text className="text-lg text-gray-300 mt-2">
-          = ${(currentSwap.baseAmount * 0.5).toFixed(2)} JUP
+          = {(currentSwap.baseAmount * 0.5).toFixed(2)} $JUP
         </Text>
       </View>
 
